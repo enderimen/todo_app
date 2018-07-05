@@ -16,11 +16,11 @@
 
         <form action="/add" method="POST">
             <div class="input-group mb-3">
-                <input type="text" class="form-control" name="title" placeholder="Başlık giriniz" aria-label="Başılk Giriniz" aria-describedby="basic-addon2">
+                <input type="text" class="form-control" name="title" placeholder="Başlık giriniz" aria-label="Başlık Giriniz" aria-describedby="basic-addon2" required>
             </div>
 
             <div class="input-group mb-3">
-                <textarea type="text" class="form-control" name="content" placeholder="İçerik giriniz" aria-label="Başılk Giriniz" aria-describedby="basic-addon2"></textarea>
+                <textarea type="text" class="form-control" name="content" placeholder="İçerik giriniz" aria-label="İçerik giriniz" aria-describedby="basic-addon2" required></textarea>
             </div>
             <button type="submit" class="btn btn-default">Ekle</button>
         </form>
@@ -38,7 +38,16 @@
                 </tr>
               </thead>
               <tbody>
-                
+                {% for todo in todos %}
+                <tr>    
+                    <th scope="row">{{todo.id}}</th>
+                    <td>{{todo.title}}</td>
+                    <td>{{todo.content}}</td>
+                    <td>{{todo.complete}}</td>
+                    <td><a href="/complete/{{todo.id}}" class="btn btn-info">Tamamla</a></td>
+                    <td><a href="/delete/{{todo.id}}" class="btn btn-danger">Sil</a></td>
+                </tr>
+                {% endfor %}
               </tbody>
           </table>
         
