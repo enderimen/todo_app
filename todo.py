@@ -21,7 +21,7 @@ def addTodo():
     db.session.commit() # tabloya ekleme işlemini gerçekleştirdik
     return redirect(url_for("index")) # Tekrar anasayfaya dönüyoruz
 
-@app.route("/complete/<string:id>")   # Yapılacak submit işleminin POST old. belirtiyoruz
+@app.route("/complete/<string:id>")   # Url' den gelen veriye göre listeleme yapıyoruz 
 def completeTodo(id): #görevi tamamla
  
     todo = Todo.query.filter_by(id=id).first()
@@ -33,6 +33,20 @@ def completeTodo(id): #görevi tamamla
 
     db.session.commit()
     return redirect(url_for("index"))
+
+@app.route("/delete/<string:id>")   # Url' den gelen verinin id sine göre silme işlemi yapıyoruz 
+def deleteTodo(id): # Silme işlemini gerçekleştir
+    
+    todo = Todo.query.filter_by(id=id).first()
+    db.session.delete(todo)
+    db.session.commit()
+    return redirect(url_for("index"))
+
+
+@app.route("/detail/<string:id>")   # Url' den gelen verinin id sine göre detay sayfasına yönlendireceğiz 
+def detailTodo(id): # Detay sayfası
+    todo = Todo.query.filter_by(id=id).first()
+    return render_template("detail.html",todo = todo)
 
 class Todo(db.Model):
 
