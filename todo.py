@@ -21,6 +21,19 @@ def addTodo():
     db.session.commit() # tabloya ekleme işlemini gerçekleştirdik
     return redirect(url_for("index")) # Tekrar anasayfaya dönüyoruz
 
+@app.route("/complete/<string:id>")   # Yapılacak submit işleminin POST old. belirtiyoruz
+def completeTodo(id): #görevi tamamla
+ 
+    todo = Todo.query.filter_by(id=id).first()
+ 
+    if (todo.complete == False):
+       todo.complete = True
+    else:
+        todo.complete = False
+
+    db.session.commit()
+    return redirect(url_for("index"))
+
 class Todo(db.Model):
 
     id = db.Column(db.Integer, primary_key = True)
