@@ -1,13 +1,24 @@
-from flask import Flask ,render_template
+from flask import Flask ,render_template, request, redirect, url_for
 from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////Users/Acer E1 571G/Desktop/todo_app/todo.db'
 db = SQLAlchemy(app)
 
-@app.route("/")
+@app.route("/") # Default yönlendirme
 def index():
    return render_template("index.html")
+
+@app.route("/add",methods = ["POST"])   # Yapılacak submit işleminin POST old. belirtiyoruz
+def addTodo():
+    title   = request.form.get("title")     
+    content = request.form.get("content")
+    
+    newTodo = Todo(title = title,content = content, complete = False) 
+
+    db.session.add(newTodo) # tabloya gönderiyoruz
+    db.session.commit() # tabloya ekleme işlemini gerçekleştirdik
+    return redirect(url_for("index")) # Tekrar anasayfaya dönüyoruz
 
 class Todo(db.Model):
 
