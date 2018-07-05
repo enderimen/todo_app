@@ -26,41 +26,48 @@
         </form>
 
         <br>
-        <table class="table">
-            <thead class="thead-dark">
-                <tr>
-                  <th scope="col">ID</th>
-                  <th scope="col">Başlık</th>
-                  <th scope="col">İçerik</th>
-                  <th scope="col">Durum</th>
-                  <th scope="col">Güncelle</th>
-                  <th scope="col">Sil</th>
-                </tr>
-              </thead>
-              <tbody>
-                {% for todo in todos %}
-                <tr>    
-                    <th scope="row">{{todo.id}}</th>
-                    <td>{{todo.title}}</td>
-                    <td>{{todo.content}}</td>
-                    {% if todo.complete == False %}
-                    <td>Tamamlanmadı</td>
-                    {% else %}
-                    <td>Tamamlandı</td>
-                    {% endif %}
-                    <td>
-                        {% if todo.complete == True  %}
-                            <a href="/complete/{{todo.id}}" class="btn btn-success">Tamamlandı</a>
+
+        {% if todos == [] %}
+            <div class="alert alert-warning" role="alert">
+                Herhangi bir görev bulunmuyor!
+            </div>  
+        {% else %}
+
+            <table class="table">
+                <thead class="thead-dark">
+                    <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">Başlık</th>
+                    <th scope="col">İçerik</th>
+                    <th scope="col">Durum</th>
+                    <th scope="col">Güncelle</th>
+                    <th scope="col">Sil</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for todo in todos %}
+                    <tr>    
+                        <th scope="row">{{todo.id}}</th>
+                        <td><a href="/detail/{{todo.id}}">{{todo.title}}</a></td>
+                        <td>{{todo.content}}</td>
+                        {% if todo.complete == False %}
+                        <td style="color:red">Tamamlanmadı</td>
                         {% else %}
-                            <a href="/complete/{{todo.id}}" class="btn btn-info">Tamamla</a>
+                        <td style="color:green">Tamamlandı</td>
                         {% endif %}
-                    </td>
-                    <td><a href="/delete/{{todo.id}}" class="btn btn-danger">Sil</a></td>
-                </tr>
-                {% endfor %}
-              </tbody>
-          </table>
-        
+                        <td>
+                            {% if todo.complete == True  %}
+                                <a href="/complete/{{todo.id}}" class="btn btn-success">Tamamlandı</a>
+                            {% else %}
+                                <a href="/complete/{{todo.id}}" class="btn btn-info">Tamamla</a>
+                            {% endif %}
+                        </td>
+                        <td><a href="/delete/{{todo.id}}" class="btn btn-danger">Sil</a></td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% endif %}
 
 
     </div>
