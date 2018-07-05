@@ -7,7 +7,8 @@ db = SQLAlchemy(app)
 
 @app.route("/") # Default yönlendirme
 def index():
-   return render_template("index.html")
+    todos = Todo.query.all() # Tüm kayıtları çekiyoruz
+    return render_template("index.html",todos = todos)
 
 @app.route("/add",methods = ["POST"])   # Yapılacak submit işleminin POST old. belirtiyoruz
 def addTodo():
